@@ -28,8 +28,25 @@ const thoughtController = {
             res.json(dbThoughtDate)
     })
     .catch((err) => {
-        throw err
-    })
-}}
+        throw err})
+    },
+    createThought({params,body},res) {
+        Thought.create(body)
+        .then(({_id}) => {
+            return User.findOneAndUpdate(                
+                {_id: params.Id},
+                {$push:{thoughts:_id}},
+                {new:true}
+            )})
+            .then((dbUserData) => {
+                if (!dbUserData) {
+                    return res.status(404).json({message:"User not exist"})
+                }
+                res.json({message:"Thought created"})
+            })
+            .catch((err) => {
+                throw err}
+            )},
+    }
 
 module.exports = thoughtController;
