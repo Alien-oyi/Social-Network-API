@@ -34,8 +34,8 @@ const thoughtController = {
         Thought.create(body)
         .then(({_id}) => {
             return User.findOneAndUpdate(                
-                {_id: params.Id},
-                {$push:{thoughts:_id}},
+                {_id: body.userId},
+                {$push:{thought:_id}},
                 {new:true}
             )})
             .then((dbUserData) => {
@@ -60,7 +60,7 @@ const thoughtController = {
         })
         .catch((err) => {
             throw err})
-    }
+    },
     }
 
 module.exports = thoughtController;
