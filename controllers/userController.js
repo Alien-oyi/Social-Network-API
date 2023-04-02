@@ -56,7 +56,15 @@ const userController = {
       throw err;
       })
     },
-    
+    deleteUser({params},res) {
+      User.findOneAndDelete({_id:params.id})
+      .then((dbUserData) =>{
+        if (!dbUserData) {
+          res.status(404).json({message:"User not found"})
+        }
+        res.json({message:"User has been deleted"})
+      })
+    }
     }
 
 module.exports = userController;
