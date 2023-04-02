@@ -13,7 +13,23 @@ const thoughtController = {
         res.json(dbThoughtDate))
         .catch((err) => {
         throw err})
-    }
-}
+    },
+    getThoughtById({params},res) {
+        Thought.findOne({_id:params.id})
+        .populate({
+            path:"reactions",
+            select:"-__v"
+        })
+        .select("-__v")
+        .then((dbThoughtDate) => {
+            if (!dbThoughtDate) {
+                res.status(404).json({message:"Thought not exist"})
+            }
+            res.json(dbThoughtDate)
+    })
+    .catch((err) => {
+        throw err
+    })
+}}
 
 module.exports = thoughtController;
