@@ -35,11 +35,28 @@ const userController = {
         res.status(404).json({message:"User not exist"})
     } 
      res.json(dbUserData)
-  })
+    })
     .catch((err) => {
       console.log(err);
       res.status(400).json("Fail to find the user")
     })    
-  }}
+    },
+    updateUser({params,body}, res) {
+      User.findOneAndUpdate({_id:params.id},body,{
+        new:true,
+        runValidators:true
+      })
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({message:"User not exist"})
+        }
+        res.json(dbUserData);
+      })
+     .catch((err) => {
+      throw err;
+      })
+    },
+    
+    }
 
-  module.exports = userController;
+module.exports = userController;
