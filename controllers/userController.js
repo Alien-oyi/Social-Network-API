@@ -64,7 +64,22 @@ const userController = {
         }
         res.json({message:"User has been deleted"})
       })
+    },
+    addFriend({params},res) {
+      User.findOneAndUpdate(
+        {_id:params.userId},
+        {$push:{friends:params.friendId}},
+        {new:true}
+      )
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({message:"User not found"})
+        }
+        res.json(dbUserData)
+      })
+      .catch((err) => {
+        throw err
+      })
     }
-    }
-
+  }
 module.exports = userController;
