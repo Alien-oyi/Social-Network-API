@@ -35,7 +35,7 @@ const thoughtController = {
         .then(({_id}) => {
             return User.findOneAndUpdate(                
                 {_id: body.userId},
-                {$push:{thought:_id}},
+                {$push:{thoughts:_id}},
                 {new:true}
             )})
             .then((dbUserData) => {
@@ -61,6 +61,17 @@ const thoughtController = {
         .catch((err) => {
             throw err})
     },
-    }
-
+    deleteThought({params},res) {
+        Thought.findOneAndDelete({_id:params.id})
+        .then((dbThoughtDate) => {
+            if (!dbThoughtDate) {
+                res.status(404).json({message:"Thought not exist"})
+            }
+            res.json(dbThoughtDate)
+        })
+        .catch((err) => {
+            throw err})
+    },
+    
+}
 module.exports = thoughtController;
