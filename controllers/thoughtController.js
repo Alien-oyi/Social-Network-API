@@ -72,6 +72,20 @@ const thoughtController = {
         .catch((err) => {
             throw err})
     },
-    
+    addReaction({params,body},res) {
+        Thought.findOneAndUpdate(
+            {_id:params.thoughtId},
+            {$push:{reactions:body}},
+            {new:true,runValidators:true}
+        )
+        .then((dbThoughtDate) => {
+            if (!dbThoughtDate) {
+                res.status(404).json({message:"Thought not exist"})
+            }
+            res.json(dbThoughtDate)
+        })
+        .catch((err) => {
+            throw err})
+    },
 }
 module.exports = thoughtController;
