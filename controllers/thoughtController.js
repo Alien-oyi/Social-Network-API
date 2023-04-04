@@ -68,7 +68,7 @@ const thoughtController = {
                 res.status(404).json({message:"Thought not exist"})
             }
             return User.findOneAndUpdate(
-                {_id:dbThoughtDate.userId},
+                { thoughts: params.id},
                 {$pull:{thoughts:params.id}},
                 {new:true}
             )
@@ -77,7 +77,7 @@ const thoughtController = {
                 if (!dbUserData) {
                     res.status(404).json({message:"User not exist"})
                 }
-                res.json({message:"Thought deleted"})
+                res.json({dbUserData})
             })
            .catch((err) => {
             throw err})
