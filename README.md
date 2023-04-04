@@ -16,8 +16,8 @@
 ## Description
 Allows developers to access and interact with social network data
 
-## Deployed Link
-None
+## Walkthrough Video
+https://drive.google.com/file/d/1ji5q2QBtLEywzOHaiwsBjuSbCikJ0_m6/view
 
 ## Screenshot
 ![App Screenshot](https://github.com/Alien-oyi/Social-Network-API/blob/main/imgs/Screenshot%20(182).png?raw=true)
