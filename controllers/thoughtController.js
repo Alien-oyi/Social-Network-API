@@ -67,9 +67,19 @@ const thoughtController = {
             if (!dbThoughtDate) {
                 res.status(404).json({message:"Thought not exist"})
             }
-            res.json(dbThoughtDate)
-        })
-        .catch((err) => {
+            return User.findOneAndUpdate(
+                {_id:dbThoughtDate.userId},
+                {$pull:{thoughts:params.id}},
+                {new:true}
+            )
+            })
+            .then((dbUserData) => {
+                if (!dbUserData) {
+                    res.status(404).json({message:"User not exist"})
+                }
+                res.json({message:"Thought deleted"})
+            })
+           .catch((err) => {
             throw err})
     },
     addReaction({params,body},res) {
